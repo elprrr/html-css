@@ -1,35 +1,99 @@
 /* BOTÓN HAMBURGUESA (ESCONDE EN DESKTOP) */
 .menu-toggle {
-  display: none; /* Oculto por defecto */
-  font-size: 2rem; /* Tamaño del ícono hamburguesa */
-  background: none; /* Sin fondo */
-  border: none; /* Sin bordes */
-  cursor: pointer; /* Manito al pasar el mouse */
-  margin-right: 1rem; /* Espacio entre el borde derecho */
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1001;
 }
 
 /* RESPONSIVE: MÓVILES */
 @media (max-width: 768px) {
   .menu-toggle {
-    display: block; /* Mostrar botón hamburguesa en móviles */
-    color: black;
+    display: block;
+  }
+
+  .Menu-vertical {
+    display: none;
+    position: absolute;
+    background: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 100;
+  }
+
+  .Menu-Horizontal > li {
+    position: relative;
+  }
+
+  .Menu-Horizontal > li:hover > .Menu-vertical {
+    display: block;
+  }
+
+  .Menu-vertical a {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    transition: background 0.2s;
+  }
+
+  .Menu-vertical a:hover {
+    background: #f5f5f5;
   }
 
   .Menu-Horizontal {
-    display: none; /* Ocultar menú horizontal por defecto */
-    flex-direction: column; /* Mostrarlo en vertical al activarse */
+    display: none;
+    flex-direction: column;
     width: 100%;
-    background-color: white;
+    background: #fff;
     position: absolute;
-    top: 5rem; /* Debajo del menú fijo */
+    top: 5rem;
     left: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
   }
 
   .Menu-Horizontal.active {
-    display: flex; /* Mostrar menú al activar la clase */
+    display: flex;
   }
 
-  .Menu-Horizontal li {
-    border-bottom: 1px solid #ccc; /* Líneas separadoras */
+  .Menu-Horizontal > li {
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .Menu-Horizontal > li > a {
+    display: block;
+    padding: 0.75rem 1rem;
+  }
+
+  .Menu-vertical {
+    position: static;
+    background: #f9f9f9;
+    box-shadow: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s;
+  }
+
+  .Menu-vertical.active {
+    max-height: 500px;
+  }
+
+  .Menu-vertical a {
+    padding: 0.6rem 1.5rem;
+  }
+
+  .has-submenu > a::after {
+    content: " ▼";
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+  }
+
+  .has-submenu.open > a::after {
+    transform: rotate(180deg);
   }
 }

@@ -1,15 +1,35 @@
-// Selecciona el botón de hamburguesa
-const btn = document.querySelector(".menu-toggle");
-
-// Selecciona el menú horizontal
+const toggle = document.querySelector(".menu-toggle");
 const menu = document.querySelector(".Menu-Horizontal");
 
-// Al hacer clic en el botón de hamburguesa
-btn.addEventListener("click", () => {
-  // Alterna (agrega o quita) la clase "active" en el menú
-  // Esto hace que se muestre o se oculte
-  menu.classList.toggle("active");
+if (toggle && menu) {
+  // Toggle menú principal
+  toggle.addEventListener("click", () => {
+    menu.classList.toggle("active");
+    toggle.innerHTML = menu.classList.contains("active")
+      ? "&#10005;"
+      : "&#9776;";
+  });
 
-  // (opcional) También puedes alternar una clase en el botón si quieres cambiar su apariencia
-  // btn.classList.toggle("open");
-});
+  // Submenús en móvil
+  menu.querySelectorAll("li").forEach((item) => {
+    const submenu = item.querySelector(".Menu-vertical");
+    if (submenu) {
+      item.classList.add("has-submenu");
+      item.querySelector("a").addEventListener("click", (e) => {
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          item.classList.toggle("open");
+          submenu.classList.toggle("active");
+        }
+      });
+    }
+  });
+
+  // Cerrar al hacer clic fuera
+  document.addEventListener("click", (e) => {
+    if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+      menu.classList.remove("active");
+      toggle.innerHTML = "&#9776;";
+    }
+  });
+}
